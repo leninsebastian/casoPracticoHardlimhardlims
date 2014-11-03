@@ -1,0 +1,20 @@
+P=[1 1 0 0; 1 0 1 0];
+T=[1 0 1 0];
+plotpv(P, T);
+net = newff([0 1;0 1],[1 1],{'hardlim' 'hardlim'} );
+net.iw{1,1}=[-0.8958 1.0759];
+net.b{1}=-0.0901;
+net = train(net,P,T);
+pesos = net.iw{1,1};
+bias = net.b{1};
+plotpc(pesos,bias);
+en = [1 ;0.4];
+y = sim(net,en);
+plotpv(en,y);
+hold on;
+point = findobj(gca,'type','line');
+set(point,'Color','red');
+plotpv(P,T);
+plotpc(pesos,bias);
+hold off;
+
